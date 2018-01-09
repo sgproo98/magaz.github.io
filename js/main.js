@@ -44,51 +44,19 @@ $(document).ready(function() {
 
 
 	$('#section-programms .margin_set11 .item-product a.btn_style').click(function(){
-		$('#section-programms .margin_set11 .item-product a.btn_style.active').not(this).removeClass('active').text('Р’С‹Р±СЂР°С‚СЊ');
+		$('#section-programms .margin_set11 .item-product a.btn_style.active').not(this).removeClass('active').text('Выбрать');
 		if($(this).hasClass('active')){
-			$(this).removeClass('active').text('Р’С‹Р±СЂР°С‚СЊ');
+			$(this).removeClass('active').text('Выбрать');
 			$('#field-service').val('');
 		}else{
-			$(this).text('Р’С‹Р±СЂР°РЅРѕ').addClass('active');
+			$(this).text('Выбрано').addClass('active');
 			var service = $(this).attr('rel');
 			$('#field-service').val(service);
 		}
 		return false;	
 	});
 
-	$('form.ajaxForm').submit(function(){
-		var form = $(this);
-		var error = false;
-		var items = $(this).find('input.required');
-		for(var i=0;i<items.length;i++){
-			if($(items[i]).val().length<1){
-				var error = true;
-				$(items[i]).parent().addClass('field_error');
-			}else{
-				$(items[i]).parent().removeClass('field_error');
-			}
-		}
 
-		if(error==false){
-			var formdata = $(form).serialize();
-			jQuery.ajax({
-					type: 'POST',
-					url: 'forms.php',
-					data: formdata,
-					success: function (html){ 
-						processResponse(html);
-						var winid = $(form).attr('rel');
-						$("#"+winid).parent(".box_window").fadeIn('normal', function(){ $('body').addClass('onModal'); }).addClass("windactiv");
-						$(".mask").fadeIn();
-						$("body").css("overflow", "hidden");
-						$(".windactiv").css("overflow-y", "scroll");
-						$(".to_blur").addClass("blur");	
-						$(form).find('input[type="text"], input[type="email"], textarea').val('');
-					}
-			});
-		}
-		return false;	
-	});
 
 
 	function processResponse(json){
@@ -126,7 +94,7 @@ $(document).ready(function() {
             preparewindow(popwindow);
             popbutton.click(function(){
                 var idwind = $(this).data("window");
-                //Р—Р°РєСЂС‹С‚РёРµ РјРѕРґР°Р»РѕРє РїСЂРё РѕС‚РєСЂС‹РІР°РЅРёРё РЅРѕРІРѕР№
+                //Закрытие модалок при открывании новой
                 $('.box_window').fadeOut('normal', function(){ $('body').removeClass('onModal'); }).removeClass("windactiv");
                 //
                 $("#" + idwind).parent(".box_window").fadeIn('normal', function(){ $('body').addClass('onModal'); }).addClass("windactiv");
